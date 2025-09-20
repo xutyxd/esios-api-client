@@ -8,6 +8,6 @@ export class PVPCHour {
     constructor(hour: IPVPCHourNormalized) {
         this.day = new Date(hour.day);
         this.hour = Number(hour.hour.split('-')[0]);
-        this.price = Number(hour.total);
+        this.price = Number(hour.total.replace(',', '.'));
     }
 }

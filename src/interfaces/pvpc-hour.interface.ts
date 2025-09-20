@@ -21,8 +21,8 @@ export interface IPVPCHour {
     PMHPCB: string;
     SAHCYM: string;
     SAHPCB: string;
-    TAHCYM: string;
-    TAHPCB: string;
+    TAHCYM?: string;
+    TAHPCB?: string;
     TEUCYM: string;
     TEUPCB: string;
 }

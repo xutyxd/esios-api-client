@@ -3,9 +3,7 @@ import { PVPCDay } from "./pvpc-day.class";
 
 export class ESIOSApiClient {
     private readonly baseUrl = 'https://api.esios.ree.es';
-    constructor() {
-        console.log('ESIOSApiClient');
-    }
+    constructor() { }
 
     public archives = {
         pvpc: async (date: Date, locale: 'es' | 'en' = 'es'): Promise<PVPCDay> => {
@@ -17,17 +15,17 @@ export class ESIOSApiClient {
             }
             // Archive ID to get
             const ARCHIVE_ID = '70';
-            const [ formatted ] = date.toISOString().split("T")[0];
+            const action = 'download_json';
+
+            const [ formatted ] = date.toISOString().split("T");
             const params = new URLSearchParams({
                 date: formatted,
                 locale
             });
             // Format url
-            const url = `${this.baseUrl}/archives/${ARCHIVE_ID}?${params.toString()}`;
-
+            const url = `${this.baseUrl}/archives/${ARCHIVE_ID}/${action}?${params.toString()}`;
             try {
                 const response = await fetch(url);
-
                 if (!response.ok) {
                     throw new Error('Error fetching archives');
                 }

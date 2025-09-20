@@ -17,7 +17,7 @@ export class PVPCDayZonedSpecial extends PVPCDayZoned {
                 pcap: hour.PCAPCYM,
                 pmh: hour.PMHCYM,
                 sah: hour.SAHCYM,
-                tah: hour.TAHCYM,
+                tah: hour.TAHCYM || '0',
                 teu: hour.TEUCYM
             };
         });

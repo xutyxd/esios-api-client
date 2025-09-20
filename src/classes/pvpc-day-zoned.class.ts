@@ -7,9 +7,13 @@ export class PVPCDayZoned {
     public min: PVPCHour;
     public max: PVPCHour;
 
+    public average: number;
+
     constructor(normalized: IPVPCHourNormalized[]) {
         this.hours = normalized.map((hour) => new PVPCHour(hour));
         this.min = this.hours.reduce((min, hour) => hour.price < min.price ? hour : min);
         this.max = this.hours.reduce((max, hour) => hour.price > max.price ? hour : max);
+
+        this.average = this.hours.reduce((total, { price }) => total + price, 0) / this.hours.length;
     }
 }
