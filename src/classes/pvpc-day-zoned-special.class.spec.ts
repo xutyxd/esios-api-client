@@ -1,7 +1,7 @@
 import { PVPCDayZonedSpecial } from "./pvpc-day-zoned-special.class";
 import { PVPCHour } from "./pvpc-hour.class";
 
-import day from '../../mocks/01-06-2021.json';
+import day from '../../mocks/21-09-2025.json';
 
 describe('PVPCDayZonedSpecial class', () => {
     describe('PVPCDayZonedSpecial instance', () => {
@@ -24,22 +24,22 @@ describe('PVPCDayZonedSpecial class', () => {
             const instance = new PVPCDayZonedSpecial(day.PVPC);
 
             expect(instance.min).toBeInstanceOf(PVPCHour);
-            expect(instance.min.price).toBe(114.84);
-            expect(instance.min.hour).toBe(4);
+            expect(instance.min.price).toBe(57.51);
+            expect(instance.min.hour).toBe(14);
         });
 
         it('should calculate max', () => {
             const instance = new PVPCDayZonedSpecial(day.PVPC);
 
             expect(instance.max).toBeInstanceOf(PVPCHour);
-            expect(instance.max.price).toBe(249.41);
-            expect(instance.max.hour).toBe(22);
+            expect(instance.max.price).toBe(149.08);
+            expect(instance.max.hour).toBe(7);
         });
 
         it('should calculate average', () => {
             const instance = new PVPCDayZonedSpecial(day.PVPC);
 
-            expect(instance.average).toBe(166.77833333333334);
+            expect(instance.average).toBe(103.02083333333331);
         });
     });
 });

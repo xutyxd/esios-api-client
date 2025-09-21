@@ -7,9 +7,11 @@ export class PVPCDay {
     public general: PVPCDayZonedGeneral;
     public special: PVPCDayZonedSpecial;
 
-    constructor(day: IPVPCDay) {
-        this.date = new Date(day.PVPC[0].Dia);
-        this.general = new PVPCDayZonedGeneral(day.PVPC);
-        this.special = new PVPCDayZonedSpecial(day.PVPC);
+    constructor(date: IPVPCDay) {
+        const [day, month, year] = date.PVPC[0].Dia.split("/");
+
+        this.date = new Date([year, month, day].join("-"));
+        this.general = new PVPCDayZonedGeneral(date.PVPC);
+        this.special = new PVPCDayZonedSpecial(date.PVPC);
     }
 }
