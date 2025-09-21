@@ -10,7 +10,10 @@ export class PVPCDayZoned {
     public average: number;
 
     constructor(normalized: IPVPCHourNormalized[]) {
-        this.hours = normalized.map((hour) => new PVPCHour(hour));
+        const [day, month, year] = normalized[0].day.split("/");
+        const date = new Date([year, month, day].join("-")).toISOString().split("T")[0];
+
+        this.hours = normalized.map((hour) => new PVPCHour({ ...hour, day: date }));
         this.min = this.hours.reduce((min, hour) => hour.price < min.price ? hour : min);
         this.max = this.hours.reduce((max, hour) => hour.price > max.price ? hour : max);
 
