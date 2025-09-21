@@ -9,6 +9,9 @@ describe('PVPCDayZonedSpecial class', () => {
             const instance = new PVPCDayZonedSpecial(day.PVPC);
 
             expect(instance).toBeInstanceOf(PVPCDayZonedSpecial);
+            expect(instance.hours.length).toBe(24);
+            expect(instance.min.day).toStrictEqual(new Date('2025-09-21'));
+            expect(instance.max.day).toStrictEqual(new Date('2025-09-21'));
         });
     })
 
