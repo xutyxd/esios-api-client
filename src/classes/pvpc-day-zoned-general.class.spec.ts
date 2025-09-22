@@ -12,6 +12,8 @@ describe('PVPCDayZonedGeneral class', () => {
             expect(instance.hours.length).toBe(24);
             expect(instance.min.day).toStrictEqual(new Date('2025-09-21'));
             expect(instance.max.day).toStrictEqual(new Date('2025-09-21'));
+            expect(instance.min.raw.day).toStrictEqual('2025-09-21');
+            expect(instance.max.raw.day).toStrictEqual('2025-09-21');
         });
     })
 

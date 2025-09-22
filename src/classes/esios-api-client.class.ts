@@ -27,15 +27,18 @@ export class ESIOSApiClient {
             try {
                 const response = await fetch(url);
                 if (!response.ok) {
-                    throw new Error('Error fetching archives');
+                    throw 'Something went wrong';
                 }
 
-                const json = await response.json() as IPVPCDay;
+                const json = await response.json() as IPVPCDay | { message: string };
+
+                if ('message' in json) {
+                    throw json.message;
+                }
 
                 return new PVPCDay(json);
             } catch (error) {
-                console.error(error);
-                throw new Error('Error fetching archives');
+                throw new Error(typeof error === 'string' ? error : 'Error fetching archives');
             }
         }
     }
