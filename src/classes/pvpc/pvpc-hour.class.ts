@@ -1,4 +1,4 @@
-import { IPVPCHourNormalized } from "../interfaces/pvpc-hour-normalized.interface";
+import { IPVPCHourNormalized } from "../../interfaces/pvpc/pvpc-hour-normalized.interface";
 
 export class PVPCHour {
     public readonly raw: IPVPCHourNormalized;

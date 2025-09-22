@@ -1,7 +1,7 @@
 import { PVPCDayZonedSpecial } from "./pvpc-day-zoned-special.class";
 import { PVPCHour } from "./pvpc-hour.class";
 
-import day from '../../mocks/21-09-2025.json';
+import day from '../../../mocks/pvpc-21-09-2025.json';
 
 describe('PVPCDayZonedSpecial class', () => {
     describe('PVPCDayZonedSpecial instance', () => {

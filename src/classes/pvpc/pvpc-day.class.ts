@@ -1,4 +1,4 @@
-import { IPVPCDay } from "../interfaces/pvpc-day.interface";
+import { IPVPCDay } from "../../interfaces/pvpc/pvpc-day.interface";
 import { PVPCDayZonedGeneral } from "./pvpc-day-zoned-general.class";
 import { PVPCDayZonedSpecial } from "./pvpc-day-zoned-special.class";
 

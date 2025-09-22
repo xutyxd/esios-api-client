@@ -1,4 +1,4 @@
-import { IPVPCHour } from "../interfaces/pvpc-hour.interface";
+import { IPVPCHour } from "../../interfaces/pvpc/pvpc-hour.interface";
 import { PVPCDayZoned } from "./pvpc-day-zoned.class";
 
 export class PVPCDayZonedGeneral extends PVPCDayZoned {

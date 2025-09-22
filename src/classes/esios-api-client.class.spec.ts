@@ -1,5 +1,7 @@
+import { Geo } from "../enums/geo.enum";
 import { ESIOSApiClient } from "./esios-api-client.class";
-import { PVPCDay } from "./pvpc-day.class";
+import { Indicator } from "./indicator/indicator.class";
+import { PVPCDay } from "./pvpc/pvpc-day.class";
 
 describe('ESIOSApiClient class', () => {
     describe('ESIOSApiClient instance', () => {
@@ -40,6 +42,25 @@ describe('ESIOSApiClient class', () => {
                 const result = await instance.archives.pvpc(date);
 
                 expect(result).toBeInstanceOf(PVPCDay);
+            });
+        });
+    });
+
+    describe('indicators', () => {
+        describe('spot', () => {
+            it('should throw an error if authentication fails', async () => {
+                const instance = new ESIOSApiClient();
+                instance['loadAuthentication'] = async () => undefined;
+
+                await expect(instance.indicators.spot(new Date(), Geo.ES)).rejects.toThrow('Could not load authentication');
+            });
+
+            it('should return an Indicator instance', async () => {
+                const instance = new ESIOSApiClient();
+                const date = new Date('2023/06/01');
+                const result = await instance.indicators.spot(date, Geo.ES);
+
+                expect(result).toBeInstanceOf(Indicator);
             });
         });
     });
