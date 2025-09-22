@@ -28,7 +28,19 @@
     "type": "git",
     "url": "git+https://github.com/xutyxd/esios-api-client.git"
   },
-  "keywords": ["typescript", "esios", "ree", "client", "api"],
+  "keywords": [
+    "typescript",
+    "esios",
+    "ree",
+    "client",
+    "api",
+    "pvpc",
+    "spot",
+    "market",
+    "red",
+    "electrica",
+    "espanola"
+],
   "author": "XutyXD",
   "license": "ISC",
   "bugs": {
