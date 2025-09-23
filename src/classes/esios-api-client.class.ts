@@ -29,6 +29,15 @@ export class ESIOSApiClient {
         return this.authentication;
     }
 
+    public auth = {
+        set: (key: string) => {
+            this.authentication = key;
+        },
+        get: () => {
+            return this.authentication;
+        }
+    }
+
     public archives = {
         pvpc: async (date: Date, locale: 'es' | 'en' = 'es'): Promise<PVPCDay> => {
             // Min date is 2021/06/01, before have another format

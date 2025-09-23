@@ -5,5 +5,6 @@ export enum Geo {
     ES = 3,
     GE = 8826,
     BE = 8827,
-    NL = 8828
+    NL = 8828,
+    PENINSULA = 8741,
 }
