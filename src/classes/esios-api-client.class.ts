@@ -68,14 +68,13 @@ export class ESIOSApiClient {
     }
 
     public indicators = {
-        spot: async (date: Date, geo: Geo, locale: 'es' | 'en' = 'es') => {
+        it: async (indicator: `${number}`, date: Date, geo: Geo, locale: 'es' | 'en' = 'es') => {
             const authentication = await this.loadAuthentication();
 
             if (!authentication) {
                 throw new Error('Could not load authentication');
             }
 
-            const INDICATOR_ID = '600';
             const start = new Date(date);
             start.setHours(0, 0, 0, 0);
             const start_date = formatDate(start);
@@ -90,7 +89,7 @@ export class ESIOSApiClient {
                 "geo_ids[]": `${geo}`,
                 locale
             });
-            const url = `${this.baseUrl}/indicators/${INDICATOR_ID}?${params.toString()}`;
+            const url = `${this.baseUrl}/indicators/${indicator}?${params.toString()}`;
 
             try {
                 const response = await fetch(url, {
@@ -102,16 +101,25 @@ export class ESIOSApiClient {
                     throw 'Something went wrong';
                 }
 
-                const json = await response.json() as IIndicator | { message: string };
-
+                const json = await response.json() as { indicator: IIndicator } | { message: string };
+                console.log(json);
                 if ('message' in json) {
                     throw json.message;
                 }
 
-                return new Indicator(json);
+                return new Indicator(json.indicator);
             } catch (error) {
+                console.log(error);
                 throw new Error(typeof error === 'string' ? error : 'Error fetching indicator');
             }
+        },
+        pvpc: async (date: Date, geo: Geo, locale: 'es' | 'en' = 'es') => {
+            const INDICATOR_ID = '1001';
+            return this.indicators.it(INDICATOR_ID, date, geo, locale);
+        },
+        spot: async (date: Date, geo: Geo, locale: 'es' | 'en' = 'es') => {
+            const INDICATOR_ID = '600';
+            return this.indicators.it(INDICATOR_ID, date, geo, locale);
         }
     }
 }

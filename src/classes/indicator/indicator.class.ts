@@ -1,31 +1,27 @@
-import { IIndicatorValue } from "../../interfaces/indicator/indicator-value.interface";
 import { IIndicator } from "../../interfaces/indicator/indicator.interface";
-import { IGeo, IMagnitude, ITime } from "../../interfaces/shared";
+import { IMagnitude, ITime } from "../../interfaces/shared";
+import { IndicatorValue } from "./indicator-value.class";
 
 export class Indicator {
-    public name: string;
-    public short_name: string;
     public id: number;
     public composited: boolean;
-    public step_type: string;
+    public stepType: 'linear' | string;
     public disaggregated: boolean;
-    public magnitud: IMagnitude[];
-    public tiempo: ITime[];
-    public geos: IGeo[];
-    public values_updated_at: string;
-    public values: IIndicatorValue[];
-
+    public magnitude: IMagnitude[];
+    public time: ITime[];
+    public geos: { id: number, name: string }[];
+    public values: IndicatorValue[];
+    public updatedAt: string;
+    
     constructor(json: IIndicator) {
-        this.name = json.name;
-        this.short_name = json.short_name;
         this.id = json.id;
         this.composited = json.composited;
-        this.step_type = json.step_type;
+        this.stepType = json.step_type;
         this.disaggregated = json.disaggregated;
-        this.magnitud = json.magnitud;
-        this.tiempo = json.tiempo;
-        this.geos = json.geos;
-        this.values_updated_at = json.values_updated_at;
-        this.values = json.values;
+        this.magnitude = json.magnitud;
+        this.time = json.tiempo;
+        this.geos = json.geos.map(({geo_id, geo_name}) => ({ id: geo_id, name: geo_name }));
+        this.values = json.values.map((value) => new IndicatorValue(value));
+        this.updatedAt = json.values_updated_at;
     }
 }
