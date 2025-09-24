@@ -1,5 +1,7 @@
 
+import { ArchiveID } from "../enums";
 import { Geo } from "../enums/geo.enum";
+import { IndicatorID } from "../enums/indicator-id.enum";
 import { formatDate } from "../functions/date-formatter.function";
 import { IIndicator } from "../interfaces/indicator/indicator.interface";
 
@@ -47,7 +49,6 @@ export class ESIOSApiClient {
                 throw new Error('Date is too early. Only supported from 2021-06-01');
             }
             // Archive ID to get
-            const ARCHIVE_ID = '70';
             const action = 'download_json';
 
             const [ formatted ] = date.toISOString().split("T");
@@ -56,7 +57,7 @@ export class ESIOSApiClient {
                 locale
             });
             // Format url
-            const url = `${this.baseUrl}/archives/${ARCHIVE_ID}/${action}?${params.toString()}`;
+            const url = `${this.baseUrl}/archives/${ArchiveID.PVPC}/${action}?${params.toString()}`;
             try {
                 const response = await fetch(url);
                 if (!response.ok) {
@@ -123,12 +124,10 @@ export class ESIOSApiClient {
             }
         },
         pvpc: async (date: Date, geo: Geo, locale: 'es' | 'en' = 'es') => {
-            const INDICATOR_ID = '1001';
-            return this.indicators.it(INDICATOR_ID, date, geo, locale);
+            return this.indicators.it(IndicatorID.PVPC, date, geo, locale);
         },
         spot: async (date: Date, geo: Geo, locale: 'es' | 'en' = 'es') => {
-            const INDICATOR_ID = '600';
-            return this.indicators.it(INDICATOR_ID, date, geo, locale);
+            return this.indicators.it(IndicatorID.SPOT, date, geo, locale);
         }
     }
 }
