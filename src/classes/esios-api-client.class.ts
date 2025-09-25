@@ -112,7 +112,7 @@ export class ESIOSApiClient {
                 }
 
                 const json = await response.json() as { indicator: IIndicator } | { message: string };
-                console.log(json);
+
                 if ('message' in json) {
                     throw json.message;
                 }
