@@ -8,6 +8,6 @@ import { Indicator } from './classes/indicator/indicator.class';
 // Interfaces
 import { IPVPCHourNormalized } from './interfaces/pvpc/pvpc-hour-normalized.interface';
 // Enums
-import { ArchiveID, IndicatorID, Geo } from './enums';
+import { ArchiveID, IndicatorID, Geo, Time } from './enums';
 
-export { ESIOSApiClient, PVPCDay, PVPCDayZoned, PVPCHour, IPVPCHourNormalized, Indicator, ArchiveID, IndicatorID, Geo };
+export { ESIOSApiClient, PVPCDay, PVPCDayZoned, PVPCHour, IPVPCHourNormalized, Indicator, ArchiveID, IndicatorID, Geo, Time };

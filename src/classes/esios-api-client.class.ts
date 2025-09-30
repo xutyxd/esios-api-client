@@ -90,7 +90,7 @@ export class ESIOSApiClient {
             const start_date = formatDate(start);
 
             const end = new Date(date);
-            end.setHours(23, 0, 0, 0);
+            end.setHours(23, 59, 59, 0);
             const end_date = formatDate(end);
 
             const params = new URLSearchParams({

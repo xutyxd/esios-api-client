@@ -1,7 +1,9 @@
-import { Geo } from "../enums/geo.enum";
 import { ESIOSApiClient } from "./esios-api-client.class";
+
 import { Indicator } from "./indicator/indicator.class";
 import { PVPCDay } from "./pvpc/pvpc-day.class";
+
+import { IndicatorID, Geo, Time } from "../enums";
 
 describe('ESIOSApiClient class', () => {
     describe('ESIOSApiClient instance', () => {
@@ -47,6 +49,56 @@ describe('ESIOSApiClient class', () => {
     });
 
     describe('indicators', () => {
+        describe('pvpc', () => {
+            it('should throw an error if authentication fails', async () => {
+                const instance = new ESIOSApiClient();
+                instance['loadAuthentication'] = async () => undefined;
+
+                await expect(instance.indicators.pvpc(new Date(), Geo.ES)).rejects.toThrow('Could not load authentication');
+            });
+
+            it('should return an Indicator instance', async () => {
+                const instance = new ESIOSApiClient();
+                const date = new Date('2023/06/01');
+                const result = await instance.indicators.pvpc(date, Geo.ES);
+
+                expect(result).toBeInstanceOf(Indicator);
+            });
+
+            it('should get a valid pvpc indicator before 01-10-2025', async () => {
+                const instance = new ESIOSApiClient();
+                const date = new Date('2025/09/30');
+                const result = await instance.indicators.pvpc(date, Geo.PENINSULA);
+
+                expect(result).toBeInstanceOf(Indicator);
+                expect(result.id).toBe(Number(IndicatorID.PVPC));
+                expect(result.composited).toBe(false);
+                expect(result.stepType).toBe('linear');
+                expect(result.disaggregated).toBe(true);
+                expect(result.magnitude[0].id).toBe(23);
+                expect(result.time[0].id).toBe(Time.HOUR);
+                expect(result.geos.length).toBe(1);
+                expect(result.geos[0].id).toBe(Geo.PENINSULA);
+                expect(result.values.length).toBe(24);
+            });
+
+            it('should get a valid pvpc indicator for 01-10-2025', async () => {
+                const instance = new ESIOSApiClient();
+                const date = new Date('2025/10/01');
+                const result = await instance.indicators.pvpc(date, Geo.PENINSULA);
+
+                expect(result).toBeInstanceOf(Indicator);
+                expect(result.id).toBe(Number(IndicatorID.PVPC));
+                expect(result.composited).toBe(false);
+                expect(result.stepType).toBe('linear');
+                expect(result.disaggregated).toBe(true);
+                expect(result.magnitude[0].id).toBe(23);
+                expect(result.time[0].id).toBe(Time.HOUR);
+                expect(result.geos.length).toBe(1);
+                expect(result.geos[0].id).toBe(Geo.PENINSULA);
+                expect(result.values.length).toBe(24);
+            });
+        });
         describe('spot', () => {
             it('should throw an error if authentication fails', async () => {
                 const instance = new ESIOSApiClient();
@@ -61,6 +113,40 @@ describe('ESIOSApiClient class', () => {
                 const result = await instance.indicators.spot(date, Geo.ES);
 
                 expect(result).toBeInstanceOf(Indicator);
+            });
+
+            it('should get a valid spot indicator before 01-10-2025', async () => {
+                const instance = new ESIOSApiClient();
+                const date = new Date('2025/09/30');
+                const result = await instance.indicators.spot(date, Geo.ES);
+
+                expect(result).toBeInstanceOf(Indicator);
+                expect(result.id).toBe(Number(IndicatorID.SPOT));
+                expect(result.composited).toBe(false);
+                expect(result.stepType).toBe('linear');
+                expect(result.disaggregated).toBe(true);
+                expect(result.magnitude[0].id).toBe(23);
+                expect(result.time[0].id).toBe(Time.HOUR);
+                expect(result.geos.length).toBe(1);
+                expect(result.geos[0].id).toBe(Geo.ES);
+                expect(result.values.length).toBe(24);
+            });
+
+            it('should get a valid spot indicator for 01-10-2025', async () => {
+                const instance = new ESIOSApiClient();
+                const date = new Date('2025/10/01');
+                const result = await instance.indicators.spot(date, Geo.ES);
+
+                expect(result).toBeInstanceOf(Indicator);
+                expect(result.id).toBe(Number(IndicatorID.SPOT));
+                expect(result.composited).toBe(false);
+                expect(result.stepType).toBe('linear');
+                expect(result.disaggregated).toBe(true);
+                expect(result.magnitude[0].id).toBe(23);
+                expect(result.time[0].id).toBe(Time.QUARTER);
+                expect(result.geos.length).toBe(1);
+                expect(result.geos[0].id).toBe(Geo.ES);
+                expect(result.values.length).toBe(24 * 4);
             });
         });
     });
