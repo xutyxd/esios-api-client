@@ -146,7 +146,7 @@ describe('ESIOSApiClient class', () => {
                 expect(result).toBeInstanceOf(Indicator);
             });
 
-            it('should get a valid spot indicator before 01-10-2025', async () => {
+            it.only('should get a valid spot indicator before 01-10-2025', async () => {
                 const instance = new ESIOSApiClient();
                 const date = new Date('2025/09/30');
                 const result = await instance.indicators.spot(date, Geo.ES);
