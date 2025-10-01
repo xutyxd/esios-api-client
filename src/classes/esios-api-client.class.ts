@@ -110,6 +110,10 @@ export class ESIOSApiClient {
                 "geo_ids[]": `${geo}`,
                 locale
             });
+
+            console.log('start', start_date);
+            console.log('end', end_date);
+            console.log('params', params.toString());
             const url = `${this.baseUrl}/indicators/${indicator}?${params.toString()}`;
 
             try {
