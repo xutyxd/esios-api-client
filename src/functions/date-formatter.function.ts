@@ -1,5 +1,5 @@
 export function formatDate(date: Date): string {
-    const formatter = new Intl.DateTimeFormat('en-GB', {
+    const formatter = new Intl.DateTimeFormat('es-ES', {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
@@ -13,7 +13,7 @@ export function formatDate(date: Date): string {
     const lookup = Object.fromEntries(parts.map((part) => [part.type, part.value]));
 
     // Manually build YYYY-MM-DD HH:mm:ss +offset
-    const tzOffsetMinutes = new Date().toLocaleTimeString('en-GB', { timeZone: 'Europe/Madrid', timeZoneName: 'shortOffset' })
+    const tzOffsetMinutes = new Date().toLocaleTimeString('es-ES', { timeZone: 'Europe/Madrid', timeZoneName: 'shortOffset' })
         .match(/GMT([+-]\d{2})(\d{2})?/);
 
     const sign = tzOffsetMinutes ? tzOffsetMinutes[1][0] : '+';
