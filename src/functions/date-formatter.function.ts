@@ -14,7 +14,7 @@ export function formatDate(date: Date): string {
 
     // Manually build YYYY-MM-DD HH:mm:ss +offset
     const tzOffsetMinutes = new Date().toLocaleTimeString('es-ES', { timeZone: 'Europe/Madrid', timeZoneName: 'shortOffset' })
-        .match(/GMT([+-]\d{2})(\d{2})?/);
+        .match(/GMT([+-]\d{1,2})(\d{2})?/);
 
     const sign = tzOffsetMinutes ? tzOffsetMinutes[1][0] : '+';
     const tzHours = tzOffsetMinutes ? tzOffsetMinutes[1].padStart(2, '0') : '00';
