@@ -1,20 +1,24 @@
 export function formatDate(date: Date): string {
-    // Pad helper
-    const pad = (number: number, width = 2) => String(number).padStart(width, '0');
+    const formatter = new Intl.DateTimeFormat('en-GB', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+        timeZone: 'Europe/Madrid'
+    });
+    const parts = formatter.formatToParts(date);
+    const lookup = Object.fromEntries(parts.map((part) => [part.type, part.value]));
 
-    const year = date.getFullYear();
-    const month = pad(date.getMonth() + 1); // Months are 0-based
-    const day = pad(date.getDate());
+    // Manually build YYYY-MM-DD HH:mm:ss +offset
+    const tzOffsetMinutes = new Date().toLocaleTimeString('en-GB', { timeZone: 'Europe/Madrid', timeZoneName: 'shortOffset' })
+        .match(/GMT([+-]\d{2})(\d{2})?/);
 
-    const hours = pad(date.getHours());
-    const minutes = pad(date.getMinutes());
-    const seconds = pad(date.getSeconds());
+    const sign = tzOffsetMinutes ? tzOffsetMinutes[1][0] : '+';
+    const tzHours = tzOffsetMinutes ? tzOffsetMinutes[1].padStart(2, '0') : '00';
+    const tzMinutes = tzOffsetMinutes && tzOffsetMinutes[2] ? tzOffsetMinutes[2].padStart(2, '0') : '00';
 
-    // Timezone offset in minutes
-    const tzOffset = -date.getTimezoneOffset(); // inverted sign
-    const sign = tzOffset >= 0 ? '+' : '-';
-    const tzHours = pad(Math.floor(Math.abs(tzOffset) / 60));
-    const tzMinutes = pad(Math.abs(tzOffset) % 60);
-
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds} ${sign}${tzHours}${tzMinutes}`;
+    return `${lookup.year}-${lookup.month}-${lookup.day} ${lookup.hour}:${lookup.minute}:${lookup.second} ${sign}${tzHours}${tzMinutes}`;
 }
