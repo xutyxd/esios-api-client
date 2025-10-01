@@ -4,6 +4,8 @@ import { Indicator } from "./indicator/indicator.class";
 import { PVPCDay } from "./pvpc/pvpc-day.class";
 
 import { IndicatorID, Geo, Time } from "../enums";
+import { PVPCDayZonedGeneral } from "./pvpc/pvpc-day-zoned-general.class";
+import { PVPCDayZonedSpecial } from "./pvpc/pvpc-day-zoned-special.class";
 
 describe('ESIOSApiClient class', () => {
     describe('ESIOSApiClient instance', () => {
@@ -44,6 +46,34 @@ describe('ESIOSApiClient class', () => {
                 const result = await instance.archives.pvpc(date);
 
                 expect(result).toBeInstanceOf(PVPCDay);
+            });
+
+            it('should return a valid PVPCDay before 01-10-2025', async () => {
+                const instance = new ESIOSApiClient();
+                const date = new Date('2025/09/30');
+                const result = await instance.archives.pvpc(date);
+
+                expect(result).toBeInstanceOf(PVPCDay);
+                expect(result.date).toStrictEqual(new Date('2025-09-30T00:00:00.000Z'));
+                expect(result.general).toBeInstanceOf(PVPCDayZonedGeneral);
+                expect(result.special).toBeInstanceOf(PVPCDayZonedSpecial);
+
+                expect(result.general.hours.length).toBe(24);
+                expect(result.special.hours.length).toBe(24);
+            });
+
+            it('should return a valid PVPCDay for 01-10-2025', async () => {
+                const instance = new ESIOSApiClient();
+                const date = new Date('2025/10/01');
+                const result = await instance.archives.pvpc(date);
+
+                expect(result).toBeInstanceOf(PVPCDay);
+                expect(result.date).toStrictEqual(new Date('2025-10-01T00:00:00.000Z'));
+                expect(result.general).toBeInstanceOf(PVPCDayZonedGeneral);
+                expect(result.special).toBeInstanceOf(PVPCDayZonedSpecial);
+
+                expect(result.general.hours.length).toBe(24);
+                expect(result.special.hours.length).toBe(24);
             });
         });
     });
@@ -99,6 +129,7 @@ describe('ESIOSApiClient class', () => {
                 expect(result.values.length).toBe(24);
             });
         });
+
         describe('spot', () => {
             it('should throw an error if authentication fails', async () => {
                 const instance = new ESIOSApiClient();

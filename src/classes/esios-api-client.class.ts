@@ -13,6 +13,12 @@ export class ESIOSApiClient {
     private readonly baseUrl = 'https://api.esios.ree.es';
     private authentication?: string;
 
+    private formatter = new Intl.DateTimeFormat('es-ES', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    });
+
     constructor() { }
 
     private async loadAuthentication() {
@@ -50,8 +56,13 @@ export class ESIOSApiClient {
             }
             // Archive ID to get
             const action = 'download_json';
+            // Use formatter to get date for Spain
+            const parts = this.formatter.formatToParts(date);
+            const day = parts.find(p => p.type === "day")?.value;
+            const month = parts.find(p => p.type === "month")?.value;
+            const year = parts.find(p => p.type === "year")?.value;
+            const formatted = `${year}-${month}-${day}`
 
-            const [ formatted ] = date.toISOString().split("T");
             const params = new URLSearchParams({
                 date: formatted,
                 locale
