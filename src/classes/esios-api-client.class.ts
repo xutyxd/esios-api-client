@@ -98,10 +98,12 @@ export class ESIOSApiClient {
 
             const start = new Date(date);
             start.setHours(0, 0, 0, 0);
+            console.log('start', start.toISOString());
             const start_date = formatDate(start);
 
             const end = new Date(date);
             end.setHours(23, 59, 59, 0);
+            console.log('end', end.toISOString());
             const end_date = formatDate(end);
 
             const params = new URLSearchParams({
