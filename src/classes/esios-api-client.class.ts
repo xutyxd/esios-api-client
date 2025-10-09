@@ -2,7 +2,7 @@
 import { ArchiveID } from "../enums";
 import { Geo } from "../enums/geo.enum";
 import { IndicatorID } from "../enums/indicator-id.enum";
-import { formatDate } from "../functions/date-formatter.function";
+import { getSpanishDayRange } from "../functions/date-formatter.function";
 import { IIndicator } from "../interfaces/indicator/indicator.interface";
 
 import { IPVPCDay } from "../interfaces/pvpc/pvpc-day.interface";
@@ -96,15 +96,7 @@ export class ESIOSApiClient {
                 throw new Error('Could not load authentication');
             }
 
-            const start = new Date(date);
-            start.setHours(0, 0, 0, 0);
-            console.log('start', start.toISOString());
-            const start_date = formatDate(start);
-
-            const end = new Date(date);
-            end.setHours(23, 59, 59, 0);
-            console.log('end', end.toISOString());
-            const end_date = formatDate(end);
+            const { start: start_date, end: end_date } = getSpanishDayRange(date);
 
             const params = new URLSearchParams({
                 start_date,
@@ -113,9 +105,6 @@ export class ESIOSApiClient {
                 locale
             });
 
-            console.log('start', start_date);
-            console.log('end', end_date);
-            console.log('params', params.toString());
             const url = `${this.baseUrl}/indicators/${indicator}?${params.toString()}`;
 
             try {
